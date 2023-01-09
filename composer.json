@@ -1,0 +1,10 @@
+{
+    "name": "maxim/pricegator-shops-api",
+    "authors": [
+        {
+            "name": "MaximPixel",
+            "email": "maximpixel@yandex.ru"
+        }
+    ],
+    "require": {}
+}
