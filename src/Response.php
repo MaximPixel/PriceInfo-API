@@ -2,9 +2,17 @@
 
 namespace Pricegator\Shop\Api;
 
-class Response {
+use JsonSerializable;
 
-    public function __construct() {
-        
+class Response implements JsonSerializable {
+
+    private $data;
+
+    public function __construct($data) {
+        $this->data = $data;
+    }
+
+    public function jsonSerialize() {
+        return $this->data;
     }
 }
