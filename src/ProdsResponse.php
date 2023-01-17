@@ -4,7 +4,7 @@ namespace Pricegator\Shop\Api;
 
 use JsonSerializable;
 
-class ProdsResponse extends ProdsRequest implements JsonSerializable {
+class ProdsResponse implements JsonSerializable {
 
     private $data;
 
