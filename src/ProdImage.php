@@ -6,10 +6,14 @@ use JsonSerializable;
 
 class ProdImage extends ValidateObject implements JsonSerializable {
 
-    protected $country;
+    protected $url;
 
     public function url($url) {
         return $this->validateSetString("url", $url);
+    }
+
+    public function getUrl() {
+        return $this->url;
     }
 
     public function validate() {
@@ -20,7 +24,7 @@ class ProdImage extends ValidateObject implements JsonSerializable {
         $this->validate();
 
         return [
-            "country" => $this->url,
+            "url" => $this->url,
         ];
     }
 }

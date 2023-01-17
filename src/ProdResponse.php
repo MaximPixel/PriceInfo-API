@@ -50,6 +50,30 @@ class ProdResponse extends ValidateObject implements JsonSerializable {
         return $this;
     }
 
+    public function getSkuId() {
+        return $this->skuId;
+    }
+
+    public function getPrice() {
+        return $this->price;
+    }
+
+    public function getData() {
+        return $this->data;
+    }
+
+    public function getDeliveries() {
+        return $this->deliveries;
+    }
+
+    public function getAvailable() {
+        return $this->itemsAvailble;
+    }
+
+    public function getImages() {
+        return $this->images;
+    }
+
     public function validate() {
         $this->validateRequired("skuId", $this->skuId);
         $this->validateRequired("url", $this->url);

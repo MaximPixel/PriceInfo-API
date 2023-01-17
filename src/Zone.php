@@ -25,6 +25,10 @@ class Zone extends ValidateObject implements JsonSerializable {
         throw new ValidationTypeException("ean", ["string", "array"], $value);
     }
 
+    public function getCountry() {
+        return $this->country;
+    }
+
     public function validate() {
         $this->validateRequired("country", $this->country);
     }

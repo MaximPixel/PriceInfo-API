@@ -50,6 +50,30 @@ class ProdData extends ValidateObject implements JsonSerializable {
         throw new ValidationTypeException("ean", ["string", "array"], $value);
     }
 
+    public function getTitle() {
+        return $this->title;
+    }
+
+    public function getModel() {
+        return $this->model;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function getManufacturer() {
+        return $this->manufacturer;
+    }
+
+    public function getWeight() {
+        return $this->weight;
+    }
+
+    public function getEan() {
+        return $this->ean;
+    }
+
     public function validate() {
         $this->validateRequired("title", $this->title);
         $this->validateRequired("ean", $this->ean);

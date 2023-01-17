@@ -32,6 +32,14 @@ class Delivery extends ValidateObject implements JsonSerializable {
         return $this;
     }
 
+    public function getZone() {
+        return $this->zone;
+    }
+
+    public function getCarriers() {
+        return $this->carriers;
+    }
+
     public function jsonSerialize() {
         $this->validate();
 

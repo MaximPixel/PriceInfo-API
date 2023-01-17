@@ -32,6 +32,22 @@ class Carrier extends ValidateObject implements JsonSerializable {
         return $this;
     }
 
+    public function getPrice() {
+        return $this->price;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getDaysEst() {
+        return $this->daysEst;
+    }
+
+    public function getInStore() {
+        return $this->inStore;
+    }
+
     public function validate() {
         $this->validateRequired("price", $this->price);
         $this->validateRequired("name", $this->name);
