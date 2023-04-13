@@ -4,7 +4,7 @@ namespace Pricegator\Shop\Api;
 
 abstract class ValidateObject {
 
-    public function validateRequired($field, $value) {
+    public function validateRequired(string $field, $value) {
         if ($value === null) {
             throw new ValidationRequiredException($field);
         }
@@ -12,7 +12,7 @@ abstract class ValidateObject {
         return true;
     }
 
-    public function validateInt($field, $value) {
+    public function validateInt(string $field, $value) {
         $validated = filter_var($value, FILTER_VALIDATE_INT);
 
         if ($validated === false) {
@@ -22,15 +22,27 @@ abstract class ValidateObject {
         return $validated;
     }
 
-    public function validateArray($field, $value) {
+    public function validateArray(string $field, $value, $type = null) {
         if (!is_array($value)) {
             throw new ValidationTypeException($field, "array", $value);
+        }
+
+        if ($type !== null) {
+            foreach ($value as $key => $arrayValue) {
+                if ($type == "string") {
+                    if (!is_string($arrayValue)) {
+                        throw new ValidationTypeException("$field[$key]", (string) $type, $arrayValue);
+                    }
+                } else if (!($arrayValue instanceof $type)) {
+                    throw new ValidationTypeException("$field[$key]", (string) $type, $arrayValue);
+                }
+            }
         }
 
         return $value;
     }
 
-    public function validateString($field, $value) {
+    public function validateString(string $field, $value) {
         if (!is_string($value)) {
             throw new ValidationTypeException($field, "string", $value);
         }

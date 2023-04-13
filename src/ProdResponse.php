@@ -6,6 +6,18 @@ use JsonSerializable;
 
 class ProdResponse extends ValidateObject implements JsonSerializable {
 
+    public static function fromJson(array $json) {
+        return (new ProdResponse)
+            ->skuId($json["skuId"])
+            ->url($json["url"])
+            ->data(ProdData::fromJson($json["data"]))
+            ->deliveries(array_map(function ($deliveryJson) {
+                return Delivery::fromJson($deliveryJson);
+            }, $json["deliveries"]))
+            ->available($json["available"])
+            ->images($json["images"]);
+    }
+
     protected $skuId;
     protected $url;
     protected $price;
@@ -14,17 +26,19 @@ class ProdResponse extends ValidateObject implements JsonSerializable {
     protected $itemsAvailable;
     protected $images;
 
-    public function skuId($skuId) {
+    public function skuId(string|int $skuId) {
         $this->skuId = $skuId;
         return $this;
     }
 
-    public function url($url) {
-        return $this->validateSetString("url", $url);
+    public function url(string $url) {
+        $this->url = $url;
+        return $this;
     }
 
-    public function price($price) {
-        return $this->validateSetFloat("price", $price);
+    public function price(float $price) {
+        $this->price = $price;
+        return $this;
     }
 
     public function data(ProdData $data) {
@@ -32,20 +46,19 @@ class ProdResponse extends ValidateObject implements JsonSerializable {
         return $this;
     }
 
-    public function deliveries($deliveries) {
-        $this->validateArray("deliveries", $deliveries);
+    public function deliveries(array $deliveries) {
+        $this->validateArray("deliveries", $deliveries, Delivery::class);
         $this->deliveries = $deliveries;
         return $this;
     }
 
-    public function available($itemsAvailable) {
-        $this->validateInt("itemsAvailable", $itemsAvailable);
+    public function available(int $itemsAvailable) {
         $this->itemsAvailable = $itemsAvailable;
         return $this;
     }
 
-    public function images($images) {
-        $this->validateArray("images", $images);
+    public function images(array $images) {
+        $this->validateArray("images", $images, "string");
         $this->images = $images;
         return $this;
     }

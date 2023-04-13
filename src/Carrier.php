@@ -6,28 +6,35 @@ use JsonSerializable;
 
 class Carrier extends ValidateObject implements JsonSerializable {
 
+    public static function fromJson(array $json) {
+        return (new Carrier)
+            ->price($json["price"])
+            ->name($json["name"])
+            ->daysEst($json["deliveryDaysEst"])
+            ->inStore($json["inStore"] ?? null);
+    }
+
     protected $price;
     protected $name;
     protected $daysEst;
     protected $inStore;
 
-    public function price($price) {
-        return $this->validateSetFloat("price", $price);
+    public function price(float $price) {
+        $this->price = $price;
+        return $this;
     }
 
-    public function name($name) {
-        return $this->validateSetString("name", $name);
+    public function name(string $name) {
+        $this->name = $name;
+        return $this;
     }
 
-    public function daysEst($daysEst) {
-        return $this->validateSetFloat("daysEst", $daysEst);
+    public function daysEst(float $daysEst) {
+        $this->daysEst = $daysEst;
+        return $this;
     }
 
-    public function inStore($inStore = true) {
-        if (!is_bool($inStore)) {
-            throw new ValidateionTypeException("inStore", "bool", $inStore);
-        }
-
+    public function inStore(bool|null $inStore = true) {
         $this->inStore = $inStore;
         return $this;
     }

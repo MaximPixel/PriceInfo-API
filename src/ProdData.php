@@ -6,6 +6,16 @@ use JsonSerializable;
 
 class ProdData extends ValidateObject implements JsonSerializable {
 
+    public static function fromJson(array $json) {
+        return (new ProdData)
+            ->title($json["title"])
+            ->ean($json["ean"])
+            ->model($json["model"] ?? null)
+            ->description($json["description"] ?? null)
+            ->manufacturer($json["manufacturer"] ?? null)
+            ->weight($json["weight"] ?? null);
+    }
+
     protected $title;
     protected $model;
     protected $description;
@@ -13,24 +23,29 @@ class ProdData extends ValidateObject implements JsonSerializable {
     protected $weight;
     protected $ean;
 
-    public function title($title) {
-        return $this->validateSetString("title", $title);
+    public function title(string $title) {
+        $this->title = $title;
+        return $this;
     }
 
-    public function model($model) {
-        return $this->validateSetString("model", $model);
+    public function model(string|null $model) {
+        $this->model = $model;
+        return $this;
     }
 
-    public function description($description) {
-        return $this->validateSetString("description", $description);
+    public function description(string|null $description) {
+        $this->description = $description;
+        return $this;
     }
 
-    public function manufacturer($manufacturer) {
-        return $this->validateSetString("manufacturer", $manufacturer);
+    public function manufacturer(string|null $manufacturer) {
+        $this->manufacturer = $manufacturer;
+        return $this;
     }
 
-    public function weight($weight) {
-        return $this->validateSetFloat("weight", $weight);
+    public function weight(float|null $weight) {
+        $this->weight = $weight;
+        return $this;
     }
 
     public function ean($ean) {

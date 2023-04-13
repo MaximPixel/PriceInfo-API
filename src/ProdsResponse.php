@@ -6,9 +6,13 @@ use JsonSerializable;
 
 class ProdsResponse implements JsonSerializable {
 
+    public static function fromJson(array $data) {
+        return new ProdsResponse($data);
+    }
+
     private $data;
 
-    public function __construct($data = []) {
+    public function __construct(array $data = []) {
         $this->data = $data;
     }
 
