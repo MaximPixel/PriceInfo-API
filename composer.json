@@ -1,5 +1,5 @@
 {
-    "name": "maxim/pricegator-shops-api",
+    "name": "maxim/priceinfo-shops-api",
     "authors": [
         {
             "name": "MaximPixel",
@@ -11,7 +11,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Pricegator\\Shop\\Api\\": "src"
+            "PriceInfo\\Shop\\Api\\": "src"
         }
     }
 }
