@@ -1,6 +1,6 @@
 <?php
 
-namespace Pricegator\Shop\Api;
+namespace PriceInfo\Shop\Api;
 
 use JsonSerializable;
 
@@ -28,22 +28,22 @@ class ProdData extends ValidateObject implements JsonSerializable {
         return $this;
     }
 
-    public function model(string|null $model) {
+    public function model($model) {
         $this->model = $model;
         return $this;
     }
 
-    public function description(string|null $description) {
+    public function description($description) {
         $this->description = $description;
         return $this;
     }
 
-    public function manufacturer(string|null $manufacturer) {
+    public function manufacturer($manufacturer) {
         $this->manufacturer = $manufacturer;
         return $this;
     }
 
-    public function weight(float|null $weight) {
+    public function weight($weight) {
         $this->weight = $weight;
         return $this;
     }

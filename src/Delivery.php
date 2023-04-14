@@ -1,6 +1,6 @@
 <?php
 
-namespace Pricegator\Shop\Api;
+namespace PriceInfo\Shop\Api;
 
 use JsonSerializable;
 
@@ -17,7 +17,7 @@ class Delivery extends ValidateObject implements JsonSerializable {
     protected $countries;
     protected $carriers;
 
-    public function country(string|array $countryCodes) {
+    public function country($countryCodes) {
         if (is_array($countryCodes)) {
             $this->countries = array_map(function ($code) {
                 return new Country($code);

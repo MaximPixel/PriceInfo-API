@@ -1,6 +1,6 @@
 <?php
 
-namespace Pricegator\Shop\Api;
+namespace PriceInfo\Shop\Api;
 
 use JsonSerializable;
 
@@ -26,7 +26,7 @@ class ProdResponse extends ValidateObject implements JsonSerializable {
     protected $itemsAvailable;
     protected $images;
 
-    public function skuId(string|int $skuId) {
+    public function skuId($skuId) {
         $this->skuId = $skuId;
         return $this;
     }

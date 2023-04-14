@@ -1,6 +1,6 @@
 <?php
 
-namespace Pricegator\Shop\Api;
+namespace PriceInfo\Shop\Api;
 
 use JsonSerializable;
 
@@ -22,7 +22,7 @@ class ProdsResponse implements JsonSerializable {
 
     public function getLastId() {
         if (isset($this->data[0])) {
-            $lastId = $this->$data[0]->getSkuId;
+            $lastId = $this->data[0]->getSkuId();
 
             foreach ($this->data as $prod) {
                 $id = $prod->getSkuId();

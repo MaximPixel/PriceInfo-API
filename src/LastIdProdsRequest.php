@@ -1,6 +1,6 @@
 <?php
 
-namespace Pricegator\Shop\Api;
+namespace PriceInfo\Shop\Api;
 
 class LastIdProdsRequest extends ProdsRequest {
 

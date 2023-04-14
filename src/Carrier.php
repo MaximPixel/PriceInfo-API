@@ -1,6 +1,6 @@
 <?php
 
-namespace Pricegator\Shop\Api;
+namespace PriceInfo\Shop\Api;
 
 use JsonSerializable;
 
@@ -34,7 +34,7 @@ class Carrier extends ValidateObject implements JsonSerializable {
         return $this;
     }
 
-    public function inStore(bool|null $inStore = true) {
+    public function inStore($inStore = true) {
         $this->inStore = $inStore;
         return $this;
     }

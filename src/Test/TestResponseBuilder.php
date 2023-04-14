@@ -1,11 +1,11 @@
 <?php
 
-namespace Pricegator\Shop\Api\Test;
+namespace PriceInfo\Shop\Api\Test;
 
-use Pricegator\Shop\Api\Request;
-use Pricegator\Shop\Api\Response;
-use Pricegator\Shop\Api\ProdsResponse;
-use Pricegator\Shop\Api\ResponseBuilder;
+use PriceInfo\Shop\Api\Request;
+use PriceInfo\Shop\Api\Response;
+use PriceInfo\Shop\Api\ProdsResponse;
+use PriceInfo\Shop\Api\ResponseBuilder;
 
 class TestResponseBuilder extends ResponseBuilder {
 
