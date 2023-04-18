@@ -6,25 +6,28 @@ use JsonSerializable;
 
 class ProdsResponse implements JsonSerializable {
 
-    public static function fromJson(array $prodResponses) {
+    public static function fromJson(array $json) {
         $prodsResponse = new ProdsResponse;
-        foreach ($prodResponses as $prodResponse) {
+        foreach ($json["prods"] as $prodResponse) {
             $prodsResponse->addProd(ProdResponse::fromJson($prodResponse));
         }
         return $prodsResponse;
     }
 
-    private $prodResponses;
+    private $prods;
 
     public function addProd(ProdResponse $prodResponse) {
-        $this->prodResponses[] = $prodResponse;
+        if ($this->prods === null) {
+            $this->prods = [];
+        }
+        $this->prods[] = $prodResponse;
     }
 
     public function getLastId() {
-        if (isset($this->prodResponses[0])) {
-            $lastId = $this->prodResponses[0]->getSkuId();
+        if (isset($this->prods[0])) {
+            $lastId = $this->prods[0]->getSkuId();
 
-            foreach ($this->prodResponses as $prod) {
+            foreach ($this->prods as $prod) {
                 $id = $prod->getSkuId();
 
                 if ($lastId < $id) {
@@ -38,11 +41,18 @@ class ProdsResponse implements JsonSerializable {
         return null;
     }
 
+    public function getProds() {
+        return $this->prods;
+    }
+
     public function count() {
-        return count($this->prodResponses);
+        return count($this->prods);
     }
 
     public function jsonSerialize() {
-        return $this->prodResponses;
+        return [
+            "prods" => $this->prods,
+            "lastId" => $this->getLastId(),
+        ];
     }
 }
