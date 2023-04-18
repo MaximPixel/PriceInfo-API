@@ -10,6 +10,7 @@ class ProdResponse extends ValidateObject implements JsonSerializable {
         return (new ProdResponse)
             ->skuId($json["skuId"])
             ->url($json["url"])
+            ->price($json["price"])
             ->data(ProdData::fromJson($json["data"]))
             ->deliveries(array_map(function ($deliveryJson) {
                 return Delivery::fromJson($deliveryJson);
@@ -90,6 +91,7 @@ class ProdResponse extends ValidateObject implements JsonSerializable {
     public function validate() {
         $this->validateRequired("skuId", $this->skuId);
         $this->validateRequired("url", $this->url);
+        $this->validateRequired("price", $this->price);
         $this->validateRequired("data", $this->data);
         $this->validateRequired("deliveries", $this->deliveries);
         $this->validateRequired("available", $this->itemsAvailable);
@@ -102,6 +104,7 @@ class ProdResponse extends ValidateObject implements JsonSerializable {
         return [
             "skuId" => $this->skuId,
             "url" => $this->url,
+            "price" => $this->price,
             "data" => $this->data,
             "deliveries" => $this->deliveries,
             "available" => $this->itemsAvailable,
