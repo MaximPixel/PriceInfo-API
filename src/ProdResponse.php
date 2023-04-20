@@ -68,10 +68,6 @@ class ProdResponse extends ValidateObject implements JsonSerializable {
         return $this->skuId;
     }
 
-    public function getUrl() {
-        return $this->url;
-    }
-
     public function getPrice() {
         return $this->price;
     }
@@ -85,7 +81,7 @@ class ProdResponse extends ValidateObject implements JsonSerializable {
     }
 
     public function getAvailable() {
-        return $this->itemsAvailable;
+        return $this->itemsAvailble;
     }
 
     public function getImages() {

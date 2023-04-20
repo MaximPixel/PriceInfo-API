@@ -6,28 +6,25 @@ use JsonSerializable;
 
 class ProdsResponse implements JsonSerializable {
 
-    public static function fromJson(array $json) {
+    public static function fromJson(array $prodResponses) {
         $prodsResponse = new ProdsResponse;
-        foreach ($json["prods"] as $prodResponse) {
+        foreach ($prodResponses as $prodResponse) {
             $prodsResponse->addProd(ProdResponse::fromJson($prodResponse));
         }
         return $prodsResponse;
     }
 
-    private $prods;
+    private $prodResponses;
 
     public function addProd(ProdResponse $prodResponse) {
-        if ($this->prods === null) {
-            $this->prods = [];
-        }
-        $this->prods[] = $prodResponse;
+        $this->prodResponses[] = $prodResponse;
     }
 
     public function getLastId() {
-        if (isset($this->prods[0])) {
-            $lastId = $this->prods[0]->getSkuId();
+        if (isset($this->prodResponses[0])) {
+            $lastId = $this->prodResponses[0]->getSkuId();
 
-            foreach ($this->prods as $prod) {
+            foreach ($this->prodResponses as $prod) {
                 $id = $prod->getSkuId();
 
                 if ($lastId < $id) {
@@ -41,18 +38,15 @@ class ProdsResponse implements JsonSerializable {
         return null;
     }
 
-    public function getProds() {
-        return $this->prods;
+    public function count() {
+        return count($this->prodResponses);
     }
 
-    public function count() {
-        return count($this->prods);
+    public function getProds() {
+        return $this->prodResponses;
     }
 
     public function jsonSerialize() {
-        return [
-            "prods" => $this->prods,
-            "lastId" => $this->getLastId(),
-        ];
+        return $this->prodResponses;
     }
 }

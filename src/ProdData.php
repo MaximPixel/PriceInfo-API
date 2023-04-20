@@ -50,7 +50,7 @@ class ProdData extends ValidateObject implements JsonSerializable {
 
     public function ean($ean) {
         if (is_string($ean)) {
-            $this->ean = [$ean];
+            $this->ean = $ean;
             return $this;
         } else if (is_array($ean)) {
             foreach ($ean as $key => $eanStr) {
