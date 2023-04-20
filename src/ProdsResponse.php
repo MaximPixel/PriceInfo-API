@@ -6,9 +6,9 @@ use JsonSerializable;
 
 class ProdsResponse implements JsonSerializable {
 
-    public static function fromJson(array $prodResponses) {
+    public static function fromJson(array $json) {
         $prodsResponse = new ProdsResponse;
-        foreach ($prodResponses as $prodResponse) {
+        foreach ($json["prods"] as $prodResponse) {
             $prodsResponse->addProd(ProdResponse::fromJson($prodResponse));
         }
         return $prodsResponse;
