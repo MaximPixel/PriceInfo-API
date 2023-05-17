@@ -6,6 +6,14 @@ use PriceInfo\Shop\Api\Prod;
 
 class ProdsResponse extends AbstractResponse {
 
+    public static function fromJson(array $json) {
+        return (new ProdsResponse)
+            ->addProds(array_map(function ($prodJson) {
+                return Prod::fromJson($prodJson);
+            }, $array))
+            ->withLastId($json["lastId"] ?? null);
+    }
+
     private $prods = [];
     private $withAutoLastId = false;
     private $lastId = null;

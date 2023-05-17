@@ -4,6 +4,10 @@ namespace PriceInfo\Shop\Api\Request;
 
 class SkuRequest extends AbstractProdsRequest {
 
+    public static function fromJson(array $json) {
+        return new SkuRequest(RequestContext::fromJson($json["context"]), $json["sku"]);
+    }
+
     protected $context, $sku;
 
     public function __construct(RequestContext $context, array $sku) {

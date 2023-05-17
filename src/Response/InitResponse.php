@@ -4,6 +4,11 @@ namespace PriceInfo\Shop\Api\Response;
 
 class InitResponse extends AbstractResponse {
 
+    public function fromJson(array $json) {
+        return (new InitResponse)
+            ->withCurrencies($json["currencies"]);
+    }
+
     private $currencies = [];
 
     public function withCurrency(string $currency) {

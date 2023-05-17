@@ -4,6 +4,18 @@ namespace PriceInfo\Shop\Api;
 
 class Prod extends AbstractApiObject {
 
+    public static function fromJson(array $json) {
+        return (new Prod)
+            ->sku($json["sku"])
+            ->url($json["url"])
+            ->price($json["price"])
+            ->data(ProdData::fromJson($json["data"]))
+            ->itemsAvailable($json["itemsAvailable"])
+            ->images(array_map(function ($imageJson) {
+                return ProdImage::fromJson($imageJson);
+            }, $json["images"]));
+    }
+
     protected $sku, $url, $price, $data, $delivery = [], $itemsAvailable, $images = [];
 
     public function sku(string|int $sku) {

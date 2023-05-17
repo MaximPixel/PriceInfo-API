@@ -4,6 +4,22 @@ namespace PriceInfo\Shop\Api;
 
 class Delivery extends AbstractApiObject {
 
+    public static function fromJson(array $json) {
+        $delivery = new Delivery;
+
+        if (is_array($json["country"])) {
+            $delivery->countries($json["country"]);
+        } else {
+            $delivery->country($json["country"]);
+        }
+
+        $delivery->carriers(array_map(function ($carrierJson) {
+            return Carrier::fromJson($carrierJson);
+        }, $json["carriers"]));
+
+        return $delivery;
+    }
+
     protected $country, $carriers;
 
     public function country(string $country) {

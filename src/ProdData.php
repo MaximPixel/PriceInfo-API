@@ -4,6 +4,35 @@ namespace PriceInfo\Shop\Api;
 
 class ProdData extends AbstractApiObject {
 
+    public static function fromJson(array $json) {
+        $prodData = (new ProdData)
+            ->title($json["title"]);
+
+        if (is_array($json["eans"])) {
+            $prodData->eans($json["eans"]);
+        } else {
+            $prodData->ean($json["eans"]);
+        }
+
+        if (array_key_exists("model", $json)) {
+            $prodData->model($json["model"]);
+        }
+
+        if (array_key_exists("description", $json)) {
+            $prodData->description($json["description"]);
+        }
+
+        if (array_key_exists("manufacturer", $json)) {
+            $prodData->manufacturer($json["manufacturer"]);
+        }
+
+        if (array_key_exists("weight", $json)) {
+            $prodData->weight($json["weight"]);
+        }
+
+        return $prodData;
+    }
+
     protected $title, $model, $description, $manufacturer, $weight, $eans;
 
     public function title(string $title) {

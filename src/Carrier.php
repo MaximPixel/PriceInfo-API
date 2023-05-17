@@ -4,6 +4,14 @@ namespace PriceInfo\Shop\Api;
 
 class Carrier extends AbstractApiObject {
 
+    public static function fromJson(array $json) {
+        return (new Carrier)
+            ->price($json["price"])
+            ->name($json["name"])
+            ->deliveryDaysEst($json["deliveryDaysEst"])
+            ->inStore($json["inStore"] ?? false);
+    }
+
     protected $price, $name, $deliveryDaysEst, $inStore;
 
     public function price(float $price) {

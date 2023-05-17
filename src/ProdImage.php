@@ -4,6 +4,10 @@ namespace PriceInfo\Shop\Api;
 
 class ProdImage extends AbstractApiObject {
 
+    public static function fromJson(array $json) {
+        return (new ProdImage)->url($json["url"]);
+    }
+
     protected $url;
 
     public function url(string $url) {

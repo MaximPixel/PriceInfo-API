@@ -20,9 +20,15 @@ $requests = [
 $module = new \PriceInfo\Shop\Api\Test\TestPriceInfoModule;
 
 foreach ($requests as $request) {
-    var_dump(json_encode($request));
+    $requestJson = json_encode($request);
+
+    $request = $module->decodeRequestJson(json_decode($requestJson, true));
+
+    $response = $responseBuilder->createResponse($module, $request);
+
+    var_dump($requestJson);
     echo("\n");
-    var_dump(json_encode($responseBuilder->createResponse($module, $request)));
+    var_dump(json_encode($response));
     echo("\n");
     echo("\n");
 }

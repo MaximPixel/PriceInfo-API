@@ -4,6 +4,10 @@ namespace PriceInfo\Shop\Api\Request;
 
 class LastIdRequest extends AbstractProdsRequest {
 
+    public static function fromJson(array $json) {
+        return new LastIdRequest(RequestContext::fromJson($json["context"]), $json["lastId"], $json["limit"]);
+    }
+
     protected $context, $lastId, $limit;
 
     public function __construct(RequestContext $context, $lastId, int $limit) {
