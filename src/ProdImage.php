@@ -2,33 +2,22 @@
 
 namespace PriceInfo\Shop\Api;
 
-use JsonSerializable;
-
-class ProdImage extends ValidateObject implements JsonSerializable {
-
-    public static function fromJson(array $json) {
-        return (new ProdImage)->url($json["url"]);
-    }
+class ProdImage extends AbstractApiObject {
 
     protected $url;
 
-    public function url($url) {
-        return $this->validateSetString("url", $url);
+    public function url(string $url) {
+        $this->url = $url;
+        return $this;
     }
 
-    public function getUrl() {
-        return $this->url;
-    }
-
-    public function validate() {
-        $this->validateRequired("url", $this->url);
-    }
-
-    public function jsonSerialize() {
-        $this->validate();
-
+    public function createJson() {
         return [
             "url" => $this->url,
         ];
+    }
+
+    public function validate($json) {
+        $this->assertArrayKeyType($json, "url", ["string"]);
     }
 }

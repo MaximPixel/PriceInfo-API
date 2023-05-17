@@ -2,62 +2,49 @@
 
 namespace PriceInfo\Shop\Api;
 
-use JsonSerializable;
+class Delivery extends AbstractApiObject {
 
-class Delivery extends ValidateObject implements JsonSerializable {
+    protected $country, $carriers;
 
-    public static function fromJson(array $json) {
-        return (new Delivery)
-            ->country($json["country"])
-            ->carriers(array_map(function ($carrierJson) {
-                return Carrier::fromJson($carrierJson);
-            }, $json["carriers"]));
-    }
-
-    protected $countries;
-    protected $carriers;
-
-    public function country($countryCodes) {
-        if (is_array($countryCodes)) {
-            $this->countries = array_map(function ($code) {
-                return new Country($code);
-            }, $countryCodes);
-        } else {
-            $this->countries = [new Country($countryCodes)];
-        }
+    public function country(string $country) {
+        $this->country = $country;
         return $this;
     }
 
-    public function carriers($carriers) {
-        $this->validateArray("carriers", $carriers, Carrier::class);
+    public function countries(array $countries) {
+        foreach ($countries as $country) {
+            if (!is_string($country)) {
+                throw new \Excepton("country should be string type");
+            }
+        }
+        $this->country = $country;
+        return $this;
+    }
+
+    public function carrier(Carrier $carrier) {
+        $this->carriers = [$carrier];
+        return $this;
+    }
+
+    public function carriers(array $carriers) {
+        foreach ($carriers as $carrier) {
+            if (!is_string($country)) {
+                throw new \Excepton("country should be Carrier type");
+            }
+        }
         $this->carriers = $carriers;
         return $this;
     }
 
-    public function getCountries() {
-        return $this->countries;
-    }
-
-    public function getCarriers() {
-        return $this->carriers;
-    }
-
-    public function validate() {
-        $this->validateRequired("countries", $this->countries);
-    }
-
-    public function jsonSerialize() {
-        $this->validate();
-
-        if (count($this->countries) == 1) {
-            $country = $this->countries[0];
-        } else {
-            $country = $this->countries;
-        }
-
+    public function createJson() {
         return [
-            "country" => $country,
+            "country" => $this->country,
             "carriers" => $this->carriers,
         ];
+    }
+
+    public function validate($json) {
+        $this->assertArrayKeyType($json, "url", ["string", "array"]);
+        $this->assertArrayKeyType($json, "carriers", ["array"]);
     }
 }
