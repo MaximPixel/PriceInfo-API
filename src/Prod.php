@@ -39,8 +39,8 @@ class Prod extends AbstractApiObject {
     }
 
     public function deliveries(array $deliveries) {
-        foreach ($images as $image) {
-            if (!($image instanceof Delivery)) {
+        foreach ($deliveries as $delivery) {
+            if (!($delivery instanceof Delivery)) {
                 throw new \Exception("delivery should be Delivery type");
             }
         }

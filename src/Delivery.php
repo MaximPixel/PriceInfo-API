@@ -30,7 +30,7 @@ class Delivery extends AbstractApiObject {
     public function countries(array $countries) {
         foreach ($countries as $country) {
             if (!is_string($country)) {
-                throw new \Excepton("country should be string type");
+                throw new \Exception("country should be string type");
             }
         }
         $this->country = $country;
@@ -44,8 +44,8 @@ class Delivery extends AbstractApiObject {
 
     public function carriers(array $carriers) {
         foreach ($carriers as $carrier) {
-            if (!is_string($country)) {
-                throw new \Excepton("country should be Carrier type");
+            if (!($carrier instanceof Carrier)) {
+                throw new \Exception("carrier should be Carrier type");
             }
         }
         $this->carriers = $carriers;
