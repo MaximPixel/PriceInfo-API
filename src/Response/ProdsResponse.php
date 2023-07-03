@@ -10,13 +10,17 @@ class ProdsResponse extends AbstractResponse {
         return (new ProdsResponse)
             ->addProds(array_map(function ($prodJson) {
                 return Prod::fromJson($prodJson);
-            }, $array))
+            }, $json["prods"]))
             ->withLastId($json["lastId"] ?? null);
     }
 
     private $prods = [];
     private $withAutoLastId = false;
     private $lastId = null;
+
+    public function getProds() {
+        return $this->prods;
+    }
 
     public function addProd(Prod $prod) {
         $this->prods[] = $prod;

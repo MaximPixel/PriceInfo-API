@@ -45,7 +45,7 @@ class Delivery extends AbstractApiObject {
     public function carriers(array $carriers) {
         foreach ($carriers as $carrier) {
             if (!($carrier instanceof Carrier)) {
-                throw new \Exception("carrier should be Carrier type");
+                throw new \Exception("country should be Carrier type");
             }
         }
         $this->carriers = $carriers;

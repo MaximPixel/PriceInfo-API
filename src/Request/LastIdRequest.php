@@ -5,7 +5,12 @@ namespace PriceInfo\Shop\Api\Request;
 class LastIdRequest extends AbstractProdsRequest {
 
     public static function fromJson(array $json) {
-        return new LastIdRequest(RequestContext::fromJson($json["context"]), $json["lastId"], $json["limit"]);
+        if (isset($json["currency"])) {
+            $context = ["currency" => $json["currency"]];
+        } else {
+            $context = $json["context"];
+        }
+        return new LastIdRequest(RequestContext::fromJson($context), $json["lastId"], $json["limit"]);
     }
 
     protected $context, $lastId, $limit;
@@ -26,6 +31,10 @@ class LastIdRequest extends AbstractProdsRequest {
 
     public function getSelectMethod() {
         return "lastId";
+    }
+
+    public function getContext() {
+        return $this->context;
     }
 
     public function getLastId() {

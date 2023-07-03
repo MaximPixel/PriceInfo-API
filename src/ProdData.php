@@ -8,10 +8,10 @@ class ProdData extends AbstractApiObject {
         $prodData = (new ProdData)
             ->title($json["title"]);
 
-        if (is_array($json["eans"])) {
-            $prodData->eans($json["eans"]);
+        if (is_array($json["ean"])) {
+            $prodData->eanArray($json["ean"]);
         } else {
-            $prodData->ean($json["eans"]);
+            $prodData->ean($json["ean"]);
         }
 
         if (array_key_exists("model", $json)) {
@@ -33,7 +33,7 @@ class ProdData extends AbstractApiObject {
         return $prodData;
     }
 
-    protected $title, $model, $description, $manufacturer, $weight, $eans;
+    protected $title, $model, $description, $manufacturer, $weight, $ean;
 
     public function title(string $title) {
         $this->title = $title;
@@ -55,23 +55,23 @@ class ProdData extends AbstractApiObject {
         return $this;
     }
 
-    public function weight(float $weight) {
+    public function weight($weight) {
         $this->weight = $weight;
         return $this;
     }
 
     public function ean(string $ean) {
-        $this->eans = $ean;
+        $this->ean = $ean;
         return $this;
     }
 
-    public function eans(array $eans) {
+    public function eanArray(array $eans) {
         foreach ($eans as $ean) {
             if (!is_string($ean)) {
                 throw new \Exception("ean should be string type");
             }
         }
-        $this->eans = $eans;
+        $this->ean = $eans;
         return $this;
     }
 
@@ -82,12 +82,12 @@ class ProdData extends AbstractApiObject {
             "description" => $this->description,
             "manufacturer" => $this->manufacturer,
             "weight" => $this->weight,
-            "eans" => $this->eans,
+            "ean" => $this->ean,
         ];
     }
 
     public function validate($json) {
         $this->assertArrayKeyType($json, "title", ["string"]);
-        $this->assertArrayKeyType($json, "eans", ["array", "string"]);
+        $this->assertArrayKeyType($json, "ean", ["array", "string"]);
     }
 }

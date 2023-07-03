@@ -18,7 +18,7 @@ class Prod extends AbstractApiObject {
 
     protected $sku, $url, $price, $data, $delivery = [], $itemsAvailable, $images = [];
 
-    public function sku(string|int $sku) {
+    public function sku($sku) {
         $this->sku = $sku;
         return $this;
     }
