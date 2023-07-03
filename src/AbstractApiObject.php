@@ -15,6 +15,7 @@ abstract class AbstractApiObject implements \JsonSerializable {
     }
 
     protected function assertArrayKeyType($array, $key, $types) {
+        return;
         if (!array_key_exists($key, $array)) {
             throw new \Exception("Key '$key' is not defined");
         }

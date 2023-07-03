@@ -44,7 +44,7 @@ class Prod extends AbstractApiObject {
                 throw new \Exception("delivery should be Delivery type");
             }
         }
-        $this->deliveries = $deliveries;
+        $this->delivery = $deliveries;
         return $this;
     }
 
@@ -68,8 +68,32 @@ class Prod extends AbstractApiObject {
         return $this;
     }
 
+    public function getUrl() {
+        return $this->url;
+    }
+
     public function getSku() {
         return $this->sku;
+    }
+
+    public function getPrice() {
+        return $this->price;
+    }
+
+    public function getDelivery() {
+        return $this->delivery;
+    }
+
+    public function getItemsAvailable() {
+        return $this->itemsAvailable;
+    }
+
+    public function getData() {
+        return $this->data;
+    }
+
+    public function getImages() {
+        return $this->images;
     }
 
     public function createJson() {

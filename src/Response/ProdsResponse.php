@@ -44,6 +44,10 @@ class ProdsResponse extends AbstractResponse {
         return $this;
     }
 
+    public function getLastId() {
+        return $this->lastId;
+    }
+
     public function createJson() {
         $array = [
             "prods" => $this->prods,

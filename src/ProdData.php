@@ -75,6 +75,30 @@ class ProdData extends AbstractApiObject {
         return $this;
     }
 
+    public function getTitle() {
+        return $this->title;
+    }
+
+    public function getModel() {
+        return $this->model;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function getManufacturer() {
+        return $this->manufacturer;
+    }
+
+    public function getWeight() {
+        return $this->weight;
+    }
+
+    public function getEan() {
+        return $this->ean;
+    }
+
     public function createJson() {
         return [
             "title" => $this->title,

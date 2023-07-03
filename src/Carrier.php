@@ -43,6 +43,22 @@ class Carrier extends AbstractApiObject {
         ];
     }
 
+    public function getPrice() {
+        return $this->price;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getDeliveryDaysEst() {
+        return $this->deliveryDaysEst;
+    }
+
+    public function isInStore() {
+        return $this->inStore;
+    }
+
     public function validate($json) {
         $this->assertArrayKeyType($json, "price", ["double"]);
         $this->assertArrayKeyType($json, "name", ["string"]);

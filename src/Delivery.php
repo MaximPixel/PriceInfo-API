@@ -33,7 +33,7 @@ class Delivery extends AbstractApiObject {
                 throw new \Exception("country should be string type");
             }
         }
-        $this->country = $country;
+        $this->country = $countries;
         return $this;
     }
 
@@ -50,6 +50,14 @@ class Delivery extends AbstractApiObject {
         }
         $this->carriers = $carriers;
         return $this;
+    }
+
+    public function getCountry() {
+        return $this->country;
+    }
+
+    public function getCarriers() {
+        return $this->carriers;
     }
 
     public function createJson() {
