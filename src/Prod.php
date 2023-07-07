@@ -1,119 +1,159 @@
 <?php
 
-namespace PriceInfo\Shop\Api;
+namespace PriceInfo\Api;
 
-class Prod extends AbstractApiObject {
+class Prod {
 
-    public static function fromJson(array $json) {
-        return (new Prod)
+    public static function fromJson($json) {
+        $prod = (new Prod)
             ->sku($json["sku"])
             ->url($json["url"])
+            ->manufacturer($json["manufacturer"])
+            ->model($json["model"])
+            ->ean($json["ean"])
             ->price($json["price"])
-            ->data(ProdData::fromJson($json["data"]))
+            ->availability($json["availability"])
             ->itemsAvailable($json["itemsAvailable"])
-            ->images(array_map(function ($imageJson) {
-                return ProdImage::fromJson($imageJson);
-            }, $json["images"]));
+            ->updated($json["updated"]);
+
+        if (isset($json["category"]) || isset($json["name"]) || isset($json["description"]) || isset($json["images"])) {
+            $prod = $prod->details(ProdDetails::fromJson($json));
+        }
+
+        if (isset($json["delivery"])) {
+            $prod = $prod->delivery(array_map(function ($deliveryJson) {
+                return ProdDelivery::fromJson($deliveryJson);
+            }, $json["delivery"]));
+        }
+
+        return $prod;
     }
 
-    protected $sku, $url, $price, $data, $delivery = [], $itemsAvailable, $images = [];
+    private $sku, $url, $manufacturer, $model, $ean, $price, $availability, $itemsAvailable, $updated;
+    private $details;
+    private $delivery;
 
     public function sku($sku) {
         $this->sku = $sku;
         return $this;
     }
 
-    public function url(string $url) {
+    public function url($url) {
         $this->url = $url;
         return $this;
     }
 
-    public function price(float $price) {
+    public function manufacturer($manufacturer) {
+        $this->manufacturer = $manufacturer;
+        return $this;
+    }
+
+    public function model($sku) {
+        $this->model = $model;
+        return $this;
+    }
+
+    public function ean($ean) {
+        $this->ean = $ean;
+        return $this;
+    }
+
+    public function price($price) {
         $this->price = $price;
         return $this;
     }
 
-    public function data(ProdData $data) {
-        $this->data = $data;
+    public function availability($availability) {
+        $this->availability = $availability;
         return $this;
     }
 
-    public function deliveries(array $deliveries) {
-        foreach ($deliveries as $delivery) {
-            if (!($delivery instanceof Delivery)) {
-                throw new \Exception("delivery should be Delivery type");
-            }
-        }
-        $this->delivery = $deliveries;
-        return $this;
-    }
-
-    public function itemsAvailable(int $itemsAvailable) {
+    public function itemsAvailable($itemsAvailable) {
         $this->itemsAvailable = $itemsAvailable;
         return $this;
     }
 
-    public function image(ProdImage $image) {
-        $this->images = [$image];
+    public function updated($updated) {
+        $this->updated = $updated;
         return $this;
     }
 
-    public function images(array $images) {
-        foreach ($images as $image) {
-            if (!($image instanceof ProdImage)) {
-                throw new \Exception("Image should be string ProdImage type");
-            }
-        }
-        $this->images = $images;
+    public function details($details) {
+        $this->details = $details;
         return $this;
     }
 
-    public function getUrl() {
-        return $this->url;
+    public function delivery($delivery) {
+        $this->delivery = $delivery;
+        return $this;
     }
 
     public function getSku() {
         return $this->sku;
     }
 
+    public function getUrl() {
+        return $this->url;
+    }
+
+    public function getManufacturer() {
+        return $this->sku;
+    }
+
+    public function getModel() {
+        return $this->model;
+    }
+
+    public function getEan() {
+        return $this->ean;
+    }
+
     public function getPrice() {
         return $this->price;
     }
 
-    public function getDelivery() {
-        return $this->delivery;
+    public function getAvailability() {
+        return $this->availability;
     }
 
     public function getItemsAvailable() {
         return $this->itemsAvailable;
     }
 
-    public function getData() {
-        return $this->data;
+    public function getUpdated() {
+        return $this->updated;
     }
 
-    public function getImages() {
-        return $this->images;
+    public function getDetails() {
+        return $this->details;
     }
 
-    public function createJson() {
-        return [
+    public function getDelivery() {
+        return $this->delivery;
+    }
+
+    public function toJson() {
+        $json = [
             "sku" => $this->sku,
             "url" => $this->url,
+            "manufacturer" => $this->manufacturer,
+            "model" => $this->model,
             "price" => $this->price,
-            "data" => $this->data,
-            "delivery" => $this->delivery,
+            "availability" => $this->availability,
             "itemsAvailable" => $this->itemsAvailable,
-            "images" => $this->images,
+            "updated" => $this->updated,
         ];
-    }
 
-    public function validate($json) {
-        $this->assertArrayKeyType($json, "sku", ["string", "integer"]);
-        $this->assertArrayKeyType($json, "url", ["string"]);
-        $this->assertArrayKeyType($json, "price", ["integer", "double"]);
-        $this->assertArrayKeyType($json, "data", [ProdData::class]);
-        $this->assertArrayKeyType($json, "itemsAvailable", ["integer"]);
-        $this->assertArrayKeyType($json, "images", ["array"]);
+        if ($this->details) {
+            foreach ($this->details->toJson() as $key => $value) {
+                $json[$key] = $value;
+            }
+        }
+
+        if ($this->delivery) {
+            $json["delivery"] = $this->delivery->toJson();
+        }
+
+        return $json;
     }
 }

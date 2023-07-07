@@ -1,68 +1,71 @@
 <?php
 
-namespace PriceInfo\Shop\Api;
+namespace PriceInfo\Api;
 
-class Carrier extends AbstractApiObject {
+class Carrier {
 
-    public static function fromJson(array $json) {
-        return (new Carrier)
-            ->price($json["price"])
+    public function fromJson($json) {
+        $carrier = (new Carrier)
             ->name($json["name"])
-            ->deliveryDaysEst($json["deliveryDaysEst"])
-            ->inStore($json["inStore"] ?? false);
+            ->shippingRate($json["shippingRate"])
+            ->deliveryDays($json["deliveryDays"]);
+
+        if (isset($json["inStore"])) {
+            $carrier = $carrier->inStore($json["inStore"]);
+        }
+
+        return $carrier;
     }
 
-    protected $price, $name, $deliveryDaysEst, $inStore;
+    private $name, $shippingRate, $deliveryDays, $inStore;
 
-    public function price(float $price) {
-        $this->price = $price;
-        return $this;
-    }
-
-    public function name(string $name) {
+    public function name($name) {
         $this->name = $name;
         return $this;
     }
 
-    public function deliveryDaysEst(string $deliveryDaysEst) {
-        $this->deliveryDaysEst = $deliveryDaysEst;
+    public function shippingRate($shippingRate) {
+        $this->shippingRate = $shippingRate;
         return $this;
     }
 
-    public function inStore(bool $inStore = true) {
-        $this->inStore = $inStore;
+    public function deliveryDays($deliveryDays) {
+        $this->deliveryDays = $deliveryDays;
         return $this;
     }
 
-    public function createJson() {
-        return [
-            "price" => $this->price,
-            "name" => $this->name,
-            "deliveryDaysEst" => $this->deliveryDaysEst,
-            "inStore" => $this->inStore,
-        ];
-    }
-
-    public function getPrice() {
-        return $this->price;
+    public function inStore($inStore) {
+        $this->inStore = !!$inStore;
+        return $this;
     }
 
     public function getName() {
         return $this->name;
     }
 
-    public function getDeliveryDaysEst() {
-        return $this->deliveryDaysEst;
+    public function getShippingRate() {
+        return $this->shippingRate;
     }
 
-    public function isInStore() {
+    public function getDeliveryDays() {
+        return $this->deliveryDays;
+    }
+
+    public function getInStore() {
         return $this->inStore;
     }
 
-    public function validate($json) {
-        $this->assertArrayKeyType($json, "price", ["double"]);
-        $this->assertArrayKeyType($json, "name", ["string"]);
-        $this->assertArrayKeyType($json, "deliveryDaysEst", ["int"]);
-        $this->assertArrayKeyType($json, "inStore", ["bool"]);
+    public function toJson() {
+        $json = [
+            "name" => $this->name,
+            "shippingRate" => $this->shippingRate,
+            "deliveryDays" => $this->deliveryDays,
+        ];
+
+        if ($this->inStore !== null) {
+            $json["inStore"] = $this->inStore ? 1 : 0;
+        }
+
+        return $json;
     }
 }
