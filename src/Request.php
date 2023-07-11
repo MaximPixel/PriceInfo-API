@@ -4,7 +4,7 @@ namespace PriceInfo\Api;
 
 class Request {
 
-    public static function createOffset(mixed $offset, int $count, bool $details = false) {
+    public static function createOffset($offset, int $count, bool $details = false) {
         return new Request("getProducts", $details, [
             "offset" => $offset,
             "count" => $count,

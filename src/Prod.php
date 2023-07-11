@@ -48,7 +48,7 @@ class Prod {
         return $this;
     }
 
-    public function model($sku) {
+    public function model($model) {
         $this->model = $model;
         return $this;
     }

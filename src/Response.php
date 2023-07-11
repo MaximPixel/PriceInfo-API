@@ -4,6 +4,14 @@ namespace PriceInfo\Api;
 
 class Response {
 
+    public function fromJson($json) {
+        return (new Response)
+            ->prods(array_map(function ($prodJson) {
+                return Prod::fromJson($prodJson);
+            }, $json["prods"]))
+            ->lastId($json["lastId"]);
+    }
+
     private $prods, $lastId;
 
     public function prods($prods) {
@@ -26,7 +34,9 @@ class Response {
 
     public function toJson() {
         return [
-            "prods" => $this->prods,
+            "prods" => array_map(function ($prod) {
+                return $prod->toJson();
+            }, $this->prods),
             "lastId" => $this->lastId,
         ];
     }

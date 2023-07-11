@@ -35,7 +35,9 @@ class ProdDelivery {
     public function toJson() {
         return [
             "country" => $this->country,
-            "carriers" => $this->carriers,
+            "carriers" => array_map(function ($carrier) {
+                return $carrier->toJson();
+            }, $this->carriers),
         ];
     }
 }
