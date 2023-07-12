@@ -4,7 +4,7 @@ namespace PriceInfo\Api;
 
 class ProdDetails {
 
-    public function fromJson($json) {
+    public static function fromJson($json) {
         return (new ProdDetails)
             ->category($json["category"])
             ->name($json["name"])

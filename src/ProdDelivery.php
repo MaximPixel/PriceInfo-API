@@ -4,11 +4,11 @@ namespace PriceInfo\Api;
 
 class ProdDelivery {
 
-    public function fromJson($json) {
+    public static function fromJson($json) {
         return (new ProdDelivery)
             ->country($json["country"])
-            ->carrier(array_map(function ($carrierJson) {
-                return Carrer::fromJson($carrierJson);
+            ->carriers(array_map(function ($carrierJson) {
+                return Carrier::fromJson($carrierJson);
             }, $json["carriers"]));
     }
 

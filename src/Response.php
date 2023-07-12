@@ -4,7 +4,7 @@ namespace PriceInfo\Api;
 
 class Response {
 
-    public function fromJson($json) {
+    public static function fromJson($json) {
         return (new Response)
             ->prods(array_map(function ($prodJson) {
                 return Prod::fromJson($prodJson);

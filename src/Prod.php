@@ -138,6 +138,7 @@ class Prod {
             "url" => $this->url,
             "manufacturer" => $this->manufacturer,
             "model" => $this->model,
+            "ean" => $this->ean,
             "price" => $this->price,
             "availability" => $this->availability,
             "itemsAvailable" => $this->itemsAvailable,
@@ -151,7 +152,9 @@ class Prod {
         }
 
         if ($this->delivery) {
-            $json["delivery"] = $this->delivery->toJson();
+            $json["delivery"] = array_map(function ($delivery) {
+                return $delivery->toJson();
+            }, $this->delivery);
         }
 
         return $json;

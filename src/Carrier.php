@@ -4,7 +4,7 @@ namespace PriceInfo\Api;
 
 class Carrier {
 
-    public function fromJson($json) {
+    public static function fromJson($json) {
         $carrier = (new Carrier)
             ->name($json["name"])
             ->shippingRate($json["shippingRate"])
